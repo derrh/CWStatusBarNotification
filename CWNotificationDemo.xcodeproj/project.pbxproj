@@ -126,6 +126,8 @@
 				TargetAttributes = {
 					5EB250921B5350580093E304 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = B6333T4PXQ;
+						DevelopmentTeamName = "Instructure, Inc.";
 						LastSwiftMigration = 0800;
 					};
 				};

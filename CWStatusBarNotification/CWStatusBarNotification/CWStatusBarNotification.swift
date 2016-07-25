@@ -301,7 +301,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func firstFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel, self.statusBarView != nil else {
                 return
         }
         view.frame = self.getNotificationLabelFrame()
@@ -319,7 +319,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func secondFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel, self.statusBarView != nil else {
                 return
         }
         switch self.notificationAnimationOutStyle {
@@ -339,7 +339,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func thirdFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel, self.statusBarView != nil else {
                 return
         }
         self.statusBarView!.frame = self.getNotificationLabelFrame()
@@ -384,13 +384,13 @@ public class CWStatusBarNotification : NSObject {
             self.notificationWindow?.isHidden = false
             
             // checking for screen orientation change
-            NotificationCenter.default().addObserver(self,
+            NotificationCenter.default.addObserver(self,
                 selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
                 name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
                 object: nil)
             
             // checking for status bar change
-            NotificationCenter.default().addObserver(self,
+            NotificationCenter.default.addObserver(self,
                 selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
                 name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
                 object: nil)
@@ -459,13 +459,13 @@ public class CWStatusBarNotification : NSObject {
         }
         
         // checking for screen orientation change
-        NotificationCenter.default().addObserver(self,
+        NotificationCenter.default.addObserver(self,
             selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
             name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
             object: nil)
         
         // checking for status bar change
-        NotificationCenter.default().addObserver(self,
+        NotificationCenter.default.addObserver(self,
             selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
             name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
             object: nil)
@@ -508,10 +508,10 @@ public class CWStatusBarNotification : NSObject {
                 self.notificationLabel = nil
                 self.notificationIsShowing = false
                 self.notificationIsDismissing = false
-                NotificationCenter.default().removeObserver(self,
+                NotificationCenter.default.removeObserver(self,
                     name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
                     object: nil)
-                NotificationCenter.default().removeObserver(self,
+                NotificationCenter.default.removeObserver(self,
                     name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
                     object: nil)
                 if completion != nil {

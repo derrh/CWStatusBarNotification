@@ -12,7 +12,7 @@ import UIKit
 
 func systemVersionLessThan(_ value : String) -> Bool {
     return UIDevice.current().systemVersion.compare(value,
-        options: NSString.CompareOptions.numericSearch) == .orderedAscending
+        options: .numeric) == .orderedAscending
 }
 
 // MARK: - ScrollLabel
