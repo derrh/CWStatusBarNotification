@@ -11,7 +11,7 @@ import UIKit
 // MARK: - helper functions
 
 func systemVersionLessThan(_ value : String) -> Bool {
-    return UIDevice.current().systemVersion.compare(value,
+    return UIDevice.current.systemVersion.compare(value,
         options: .numeric) == .orderedAscending
 }
 
@@ -50,7 +50,7 @@ public class ScrollLabel : UILabel {
         var frame = rect // because rect is immutable
         frame.size.width = self.fullWidth() + padding * 2
         UIGraphicsBeginImageContextWithOptions(frame.size, false,
-            UIScreen.main().scale)
+            UIScreen.main.scale)
         super.drawText(in: frame)
         textImage.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -100,10 +100,10 @@ public class CWWindowContainer : UIWindow {
     override public func hitTest(_ pt: CGPoint, with event: UIEvent?) -> UIView? {
         var height : CGFloat = 0.0
         if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
-            UIApplication.shared().statusBarOrientation) {
-                height = UIApplication.shared().statusBarFrame.size.width
+            UIApplication.shared.statusBarOrientation) {
+                height = UIApplication.shared.statusBarFrame.size.width
         } else {
-            height = UIApplication.shared().statusBarFrame.size
+            height = UIApplication.shared.statusBarFrame.size
                 .height
         }
         if pt.y > 0 && pt.y < (self.notificationHeight != 0.0 ?
@@ -120,16 +120,16 @@ class CWViewController : UIViewController {
     var localPreferredStatusBarStyle : UIStatusBarStyle = .default
     var localSupportedInterfaceOrientations : UIInterfaceOrientationMask = []
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return self.localPreferredStatusBarStyle
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return self.localSupportedInterfaceOrientations
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        let statusBarHeight = UIApplication.shared().statusBarFrame
+    override var prefersStatusBarHidden: Bool {
+        let statusBarHeight = UIApplication.shared.statusBarFrame
             .size.height
         return !(statusBarHeight > 0)
     }
@@ -160,7 +160,7 @@ func performClosureAfterDelay(_ seconds : Double, closure: (()->Void)?) -> CWDel
     
     let delay = Int64(Double(seconds) * Double(NSEC_PER_SEC))
     let after = DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)
-    DispatchQueue.main.after(when: after) {
+    DispatchQueue.main.asyncAfter(deadline: after) {
         if delayHandleCopy != nil {
             delayHandleCopy(false)
         }
